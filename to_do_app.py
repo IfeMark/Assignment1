@@ -50,7 +50,8 @@ def to_do_list():
 to_do_list()
 
 with open('full_list.txt','w') as f:
-            for a in tasks:
-                f.write(a + '\n')
-                print(a)
+    print("Tasks: \n")
+    for a in tasks:
+        f.write(a + '\n')
+        print(a)
         

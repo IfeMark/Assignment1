@@ -1,81 +1,76 @@
-import sys
-sys.path.append('C:/Users/dell/Documents/DATA_ANALYSIS/')
-#GET THE INFORMATION
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 def get_user_data():
     D={}
+    D2 = {}
     while True:
         student_name = input("Enter the student name: ")
-        marks_list = input("Enter the marks and separate with a comma: ")
-        more_students = input('Enter "no" to quit or else enter "yes: ')
+        student_info = {}
+        scores = []
+        num_subjects = int(input("Enter the number of subjects: "))
+        for i in range(num_subjects):
+            key = input("Enter the subject: ")
+            value = input ("Enter the mark: ")
+            scores.append(value)
+            student_info.update({key:value})
+        more_students = input('Enter "no" to quit or else enter "yes": ')
         if student_name in D:
             print(student_name, " is already inserted")
         else:
-            D[student_name] = marks_list.split(",")
+            D2[student_name] = scores
+            D[student_name] = student_info
+            del student_info
+            del scores
         if more_students.lower() == "no":
-            return D
-student_data = get_user_data() 
-print(student_data)
-
-#FIND THE AVERAGE
-def average_marks(D):
+            return D,D2
+students,student_data = get_user_data() 
+print(students)
+def average_marks(main):
     average_marks = {}
-    for x in D:
-        L = D[x]
+    for x in main:
+        L = main[x]
+        print(L)
         s = 0
         for marks in L:
             s+=int(marks)
         average_marks[x] = s/len(L)
     return average_marks
 average_marks_student_data = average_marks(student_data)
-for x in average_marks_student_data:
-    print('Student: ',x, ', got an average mark of: ',average_marks_student_data[x])
-    
-#FIND MINIMUM AND MAXIMUM, THEN SORT IN ASCENDING ORDER
-'''def findMin_Max(L):
-    minimum_value = L[0]
-    maximum_value = L[0]
-    for a in L:
-            if int(a)<int(minimum_value):
-                minimum_value = a
-            if int(a)>int(maximum_value):
+
+def findMin_Max(D,startidx):
+        minimum_value = D[startidx]
+        maximum_value = D[startidx]
+        index_min = startidx
+        for a in range(startidx, len(D)):
+            if float(D[a])<float(minimum_value):
+                minimum_value = D[a]
+                index_min = a
+            if float(D[a])>float(maximum_value):
                 maximum_value = a
             else:
                 pass
-    return minimum_value,maximum_value
-List = []
-Din = [3,4,6,2,7,2,4]
-for x in range(0,len(Din)):
-    minimum,maximum = findMin_Max(Din)
-    #print(type(minimum))
-    List.append(minimum)
-    #print(type(Din))
-    Din.remove(minimum)
-print(List)'''
-'''def findMin_Max(D):
-    min = {}
-    idx = {}
-   # max = {}
+        return minimum_value,maximum_value,index_min
+def swapvalues(D,idx1,idx2):
+    D[idx1],D[idx2] = D[idx2],D[idx1]
+    return D
+def sort_a_list(D):
+    sort = {} 
     for x in D:
-        L = D[x]
-        startidx = 0
-        minimum_value = L[startidx]
-        #idx = startidx
-       # maximum_value = L[startidx]
-        for a in L:
-            if float(a)<float(minimum_value):
-                minimum_value = a
-                index_min = L.index(minimum_value)
-                #print(index_min)
-                #print(a)
-            #elif int(a)>float(maximum_value):
-              #  maximum_value = a
-            else:
-                pass
-        min[x] = minimum_value
-        idx[x] = index_min
-        #max[x] = maximum_value
-    return min,idx
-print(findMin_Max(student_data))'''
+        Initial = D[x]
+        for c in range(len(Initial)):
+            minimum,maximum,idx = findMin_Max(Initial,c)
+            Initial = swapvalues(Initial,c,idx)
+        sort[x]=Initial
+    return sort
+sorted_list = sort_a_list(student_data)
+
+for x in sorted_list:
+    print('Student: ',x, ', got an average mark of: ',average_marks_student_data[x])
+    print('Student: ',x, ', has an ordered list of: ',sorted_list[x])
+    print('Student: ',x, ', has a minimum of: ',sorted_list[x][0])
+    print('Student: ',x, ', has a maximum of: ',sorted_list[x][-1])
+
 import pandas as pd
 d_student_data = pd.DataFrame(student_data)
 path = r"C:/Users/dell/Documents/DATA ANALYSIS/student_records.xlsx"
