@@ -65,13 +65,22 @@ def sort_a_list(D):
     return sort
 sorted_list = sort_a_list(student_data)
 
+student_name = []
+average = []
 for x in sorted_list:
-    print('Student: ',x, ', got an average mark of: ',average_marks_student_data[x])
+    student_name.append(x)
+    average.append(round(average_marks_student_data[x],1))
+    print('Student: ',x, ', got an average mark of: ',round(average_marks_student_data[x],1))
     print('Student: ',x, ', has an ordered list of: ',sorted_list[x])
     print('Student: ',x, ', has a minimum of: ',sorted_list[x][0])
     print('Student: ',x, ', has a maximum of: ',sorted_list[x][-1])
 
-import pandas as pd
-d_student_data = pd.DataFrame(student_data)
-path = r"C:/Users/dell/Documents/DATA ANALYSIS/student_records.xlsx"
-d_student_data.to_excel(path,index="False")
+with open('student_information.txt','w') as f:
+    f.write(str(students))
+    
+width = 0.2
+plt.bar(student_name, average, width)
+plt.xlabel('Students')
+plt.ylabel('Average Scores')
+plt.title("COMPARISON OF EACH STUDENT'S AVERAGE")
+plt.show()
