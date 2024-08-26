@@ -16,11 +16,12 @@ def simple_calculator():
             V3 = V2/V1
     else:
         print("Input is not valid, type a correct input")
-    return V3
+        return
+    print('The result of the ', choice.lower(), ': ', V3)
 V1 = int(input("Input first value: "))
 V2 = int(input("Input second value: "))
 choice = input("Do you want to perform addition, subtraction, multiplication or division? ")
-result = simple_calculator()
-print('The result of the ', choice.lower(), ': ', result)
+simple_calculator()
+
 
 

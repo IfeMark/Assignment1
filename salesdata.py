@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-df = pd.read_csv("C:/Users/dell/Documents/DATA_ANALYSIS/PROJECT_1/company_sales.csv")
+df = pd.read_csv("company_sales.csv")
 df.month_number = df.month_number.astype(str)
 df['month_number'] = df['month_number'].replace({'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July',
                                                  '8':'August','9':'September','10':'October','11':'November','12':'December'})

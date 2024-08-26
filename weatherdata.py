@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-df = pd.read_csv("C:/Users/dell/Documents/DATA_ANALYSIS/PROJECT_1/weather2.csv",encoding = 'latin 1') 
+df = pd.read_csv("weather2.csv",encoding = 'latin 1') 
 df = df.rename(columns={'Day':'Date'})
 df['Average Temperature (°F)'] = round((df.iloc[:,1:3].sum(axis=1))/2)
 df['Average Humidity (°F)'] = round((df.iloc[:,3:5].sum(axis=1))/2)
